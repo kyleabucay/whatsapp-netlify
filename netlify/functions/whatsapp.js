@@ -1,9 +1,10 @@
-import fetch from "node-fetch";
+// use CommonJS syntax so Netlify can execute it
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
-const VERIFY_TOKEN = "bookproject2025"; // use the same token in Meta Dashboard
-const N8N_WEBHOOK_URL = "https://www.n8n-kylobite.com/webhook/whatsapp-audio"; // your n8n webhook
+const VERIFY_TOKEN = "bookproject2025";
+const N8N_WEBHOOK_URL = "https://www.n8n-kylobite.com/webhook/whatsapp-audio";
 
-export async function handler(event) {
+exports.handler = async (event) => {
   // 1️⃣ Facebook verification
   if (event.httpMethod === "GET") {
     const params = new URLSearchParams(event.rawQuery);
@@ -37,4 +38,4 @@ export async function handler(event) {
   }
 
   return { statusCode: 404, body: "Not Found" };
-}
+};
